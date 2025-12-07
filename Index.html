@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>$NAKE</title>
+    <style>
+        body {
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 10px;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none;
+        }
+
+        /* --- TOP BAR --- */
+        #topBar {
+            display: flex;
+            justify-content: space-between;
+            width: 95vw;
+            max-width: 576px; 
+            margin-bottom: 10px;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        .stat-label { font-size: 20px; color: #666; font-weight: bold;}
+        #scoreBoard { font-size: 30px; font-weight: bold; text-shadow: 0 0 5px #00ff00; }
+
+        /* --- GAME CONTAINER --- */
+        #gameContainer {
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.15);
+            /* This border is the "Wall" */
+            border: 2px solid #00ff00; 
+            
+            /* 18 tiles * 32px = 576px */
+            width: 95vw; 
+            max-width: 576px; 
+            aspect-ratio: 1 / 1; 
+            background: #000;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            image-rendering: pixelated;
+        }
+
+        /* --- D-PAD CONTROLS --- */
+        #controlsArea {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 80px 80px 80px;
+            grid-template-rows: 60px 60px;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .dpad-btn {
+            background: rgba(0, 20, 0, 0.5);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            color: #00ff00;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,255,0,0.2);
+            transition: background 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .dpad-btn:active { background: #00ff00; color: #000; }
+
+        #btnUp    { grid-column: 2; grid-row: 1; }
+        #btnLeft  { grid-column: 1; grid-row: 2; }
+        #btnDown  { grid-column: 2; grid-row: 2; }
+        #btnRight { grid-column: 3; grid-row: 2; }
+
+        /* --- OVERLAYS --- */
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.85);
+            text-align: center;
+            display: none;
+            z-index: 10;
+        }
+
+        h1 { font-size: 50px; margin: 0 0 20px 0; text-shadow: 0 0 10px #00ff00; }
+        
+        button.menu-btn {
+            background: transparent;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 15px 30px;
+            font-size: 24px;
+            font-family: inherit;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 20px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+        button.menu-btn:hover { background: #00ff00; color: #000; }
+    </style>
+</head>
+<body>
+
+    <div id="topBar">
+        <div><span class="stat-label">$NAKE</span></div>
+        <div><span class="stat-label">LENGTH: </span><span id="scoreBoard">5</span></div>
+    </div>
+
+    <!-- 576x576 Canvas (18 x 32) -->
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="576" height="576"></canvas>
+
+        <div id="startScreen" class="overlay" style="display: flex;">
+            <h1>READY?</h1>
+            <p>Use Arrows or Buttons</p>
+            <button class="menu-btn" id="startBtn">START</button>
+        </div>
+
+        <div id="pauseScreen" class="overlay">
+            <h1>PAUSED</h1>
+            <button class="menu-btn" id="resumeBtn">RESUME</button>
+        </div>
+
+        <div id="gameOverScreen" class="overlay">
+            <h1 style="color: #ff3333; text-shadow: 0 0 10px red;">RUGGED</h1>
+            <p id="finalScore" style="margin-bottom: 20px;">LENGTH: 0</p>
+            <button class="menu-btn" id="restartBtn">TRY AGAIN</button>
+        </div>
+    </div>
+
+    <div id="controlsArea">
+        <div class="dpad-btn" id="btnUp">▲</div>
+        <div class="dpad-btn" id="btnLeft">◀</div>
+        <div class="dpad-btn" id="btnDown">▼</div>
+        <div class="dpad-btn" id="btnRight">▶</div>
+    </div>
+
+<script src="js/UI.js"></script>
+<script src="js/Grid.js"></script>
+<script src="js/Food.js"></script>
+<script src="js/Snake.js"></script>
+<script src="js/Sound.js"></script>
+<script src="js/Particles.js"></script>
+<script src="js/Game.js"></script>
+
+</body>
+</html>
